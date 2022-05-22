@@ -1,6 +1,3 @@
-from distutils.command.upload import upload
-from pipes import Template
-from urllib import response
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
@@ -11,6 +8,7 @@ import pandas as pd
 from analyze_card.function import convert_csv, process_csv
 
 # Create your views here.
+
 def index(request):
     if request.method == 'POST':
         upload = CsvForm(request.POST,request.FILES)
@@ -20,9 +18,8 @@ def index(request):
 
             response = convert_csv(df)
 
-            #return response
-            return HttpResponse('')
-
-        else:
-            upload = CsvForm()
-            return render(request,'index.html',{'form':upload}) 
+            return response
+            
+    else:
+        upload = CsvForm()
+        return render(request,'index.html',{'form':upload}) 
